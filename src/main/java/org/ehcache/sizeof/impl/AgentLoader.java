@@ -29,6 +29,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
@@ -172,7 +173,7 @@ final class AgentLoader {
         } else if (agent.getProtocol().equals("file")) {
             return new File(agent.getFile());
         } else {
-            File temp = File.createTempFile("ehcache-sizeof-agent", ".jar");
+            File temp = Files.createTempFile("ehcache-sizeof-agent", ".jar").toFile();
             try (FileOutputStream fout = new FileOutputStream(temp); InputStream in = agent.openStream()) {
                 byte[] buffer = new byte[1024];
                 while (true) {
